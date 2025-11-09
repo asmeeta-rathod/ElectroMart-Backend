@@ -15,12 +15,19 @@ class CategorySerializer(serializers.ModelSerializer):
 #         fields = '__all__'
         
 
-class ProductSerializer(serializers.ModelSerializer):
-    # Allow category assignment via ID
-    category_id = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all(), source='category', write_only=True
-    )
+# class ProductSerializer(serializers.ModelSerializer):
+#     # Allow category assignment via ID
+#     category_id = serializers.PrimaryKeyRelatedField(
+#         queryset=Category.objects.all(), source='category', write_only=True
+#     )
 
+#     class Meta:
+#         model = Product
+#         fields = ['id', 'name', 'description', 'price', 'image', 'category', 'category_id']
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'image', 'category', 'category_id']
+        fields= '__all__'
